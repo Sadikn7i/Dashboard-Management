@@ -1,6 +1,6 @@
 #  Cyberpunk Project Hub - A Futuristic Dashboard UI
 
-![Cyberpunk Project Hub Screenshot](https://i.imgur.com/8a6p4qj.png)
+![Cyberpunk Project Hub Screenshot](https://raw.githubusercontent.com/Sadikn7i/Dashboard-Management/master/pic.png)
 
 A sleek, futuristic project management dashboard with a cyberpunk aesthetic. This project is built with vanilla HTML, CSS, and JavaScript, focusing on a modern UI/UX with interactive, dynamic components. No frameworks, no libraries, just pure front-end development.
 
