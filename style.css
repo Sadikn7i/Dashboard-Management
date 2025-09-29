@@ -1,0 +1,188 @@
+/* --- Base & Variables --- */
+:root {
+    --bg-color: #0D0C1D;
+    --glass-bg: rgba(22, 21, 46, 0.6);
+    --border-color: rgba(100, 255, 218, 0.2);
+    --primary-text: #E0E0E0;
+    --secondary-text: #A0A0C0;
+    --accent-color: #64FFDA;
+    --accent-glow: 0 0 15px rgba(100, 255, 218, 0.5);
+    --font-family: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--primary-text);
+    background-image: radial-gradient(circle at 1px 1px, rgba(100, 255, 218, 0.3) 1px, transparent 0);
+    background-size: 25px 25px;
+    overflow-x: hidden;
+}
+
+#app-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "header"
+        "main";
+    height: 100vh;
+    transition: grid-template-columns 0.4s ease-in-out;
+}
+
+/* --- Glassmorphism Panel Style --- */
+.panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+/* --- Header --- */
+#app-header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    height: 70px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+.logo { font-size: 1.5rem; font-weight: 700; color: var(--accent-color); text-shadow: var(--accent-glow); cursor: pointer; }
+.main-nav { margin-left: 50px; }
+.main-nav a { color: var(--secondary-text); text-decoration: none; margin: 0 15px; font-weight: 500; transition: color 0.3s; cursor: pointer; }
+.main-nav a.active, .main-nav a:hover { color: var(--primary-text); }
+.header-actions { margin-left: auto; display: flex; align-items: center; gap: 20px; }
+.header-actions .icon-button { background: none; border: none; color: var(--secondary-text); cursor: pointer; transition: color 0.3s; }
+.header-actions .icon-button:hover { color: var(--accent-color); }
+.profile-button {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+    object-fit: cover;
+}
+.profile-button:hover { box-shadow: var(--accent-glow); }
+
+/* --- NEW: Search Bar --- */
+#search-bar {
+    position: absolute;
+    left: 170px;
+    width: 300px;
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--primary-text);
+    padding: 8px 15px;
+    font-size: 1rem;
+    outline: none;
+    opacity: 0;
+    transform: translateY(-10px) scaleX(0.9);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#search-bar:focus { box-shadow: var(--accent-glow); }
+#search-bar.active {
+    opacity: 1;
+    transform: translateY(0) scaleX(1);
+    pointer-events: auto;
+}
+
+
+/* --- Main Content --- */
+#app-main {
+    grid-area: main;
+    padding: 30px;
+    overflow-y: auto;
+}
+.main-title { font-size: 2rem; font-weight: 600; }
+.main-subtitle { color: var(--secondary-text); margin-top: 5px; }
+
+/* Progress Rings Section */
+.projects-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-top: 30px; }
+.project-card { padding: 20px; text-align: center; }
+.progress-ring { position: relative; width: 120px; height: 120px; margin: 0 auto 15px; }
+.progress-ring svg { transform: rotate(-90deg); }
+.progress-ring circle { stroke-width: 10; fill: none; transition: stroke-dashoffset 0.8s ease-out; }
+.progress-ring .ring-bg { stroke: var(--border-color); }
+.progress-ring .ring-fg { stroke: var(--accent-color); filter: drop-shadow(var(--accent-glow)); }
+.progress-percent { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5rem; font-weight: 600; }
+.project-card h3 { font-size: 1.1rem; }
+.project-card p { font-size: 0.9rem; color: var(--secondary-text); }
+
+/* Task Board (Kanban) */
+.task-board-container { margin-top: 40px; }
+.task-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 20px; }
+.task-column h3 { display: flex; align-items: center; gap: 8px; font-size: 1.2rem; margin-bottom: 20px; }
+.task-column h3 span { font-size: 0.9rem; background: var(--glass-bg); padding: 2px 8px; border-radius: 6px; }
+.task-card { padding: 15px; margin-bottom: 15px; cursor: grab; transition: transform 0.2s, box-shadow 0.2s; }
+.task-card:active { cursor: grabbing; transform: scale(1.05); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.task-card .task-tag { font-size: 0.75rem; font-weight: 600; padding: 3px 8px; border-radius: 5px; display: inline-block; margin-bottom: 10px; }
+.task-card p { font-weight: 500; font-size: 1rem; }
+.task-card.dragging { opacity: 0.5; }
+
+/* --- NEW: Add Task Button & Form --- */
+.add-task-btn {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px dashed var(--border-color);
+    color: var(--secondary-text);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+.add-task-btn:hover { background: var(--glass-bg); color: var(--primary-text); }
+.add-task-form { display: none; margin-top: 15px; }
+.add-task-form input {
+    width: 100%;
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--primary-text);
+    padding: 10px;
+    outline: none;
+}
+.add-task-form.active { display: block; }
+
+
+/* --- Aside (Right Sidebar) --- */
+#app-aside {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    padding: 30px;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    border-left: 1px solid var(--border-color);
+    overflow-y: auto;
+    z-index: 10;
+}
+#app-aside:not(.collapsed) { transform: translateX(0); }
+.aside-title { font-size: 1.3rem; font-weight: 600; }
+.team-list, .activity-feed { margin-top: 20px; }
+.team-member { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+.team-member img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--border-color); object-fit: cover; }
+.team-member .member-name { font-weight: 500; }
+.team-member .member-role { font-size: 0.85rem; color: var(--secondary-text); }
+.activity-item { position: relative; padding-left: 25px; margin-bottom: 20px; }
+.activity-item::before { content: ''; position: absolute; left: 4px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent-color); border: 2px solid var(--bg-color); }
+.activity-item::after { content: ''; position: absolute; left: 8px; top: 15px; width: 1px; height: calc(100% - 5px); background: var(--border-color); }
+.activity-item p { margin: 0; }
+.activity-item .activity-time { font-size: 0.8rem; color: var(--secondary-text); margin-top: 4px; }
+
